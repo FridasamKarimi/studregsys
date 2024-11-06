@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Registration System</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="registration container">
+        <h2>Registration Form</h2>
+        <form action="/register" method="post">
+            <div class="input-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+            <div class="input-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="input-group">
+                <label for="pid">Passport/ID Number</label>
+                <input type="text" id="pid" name="passportId" required>
+            </div>
+            <div class="input-group">
+                <label for="course">Select Course</label>
+                <select id="course" name="course" required>
+                    <option value="" disabled selected>Select your course</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Software Engineering">Software Engineering</option>
+                    <option value="Data Science">Data Science</option>
+                    <!-- Add more course options as needed -->
+                </select>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

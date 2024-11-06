@@ -1,0 +1,33 @@
+/* Center the search bar at the top */
+.dashboard-search {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Style the search input */
+.dashboard-search input[type="text"] {
+    padding: 10px;
+    width: 60%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Additional styles for the dashboard layout */
+.dashboard-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.dashboard-menu a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.splash {
+    margin-top: 20px;
+}
