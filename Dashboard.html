@@ -8,22 +8,51 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <h2>Dashboard</h2>
-        <div class="dashboard-menu">
-            <a href="/students">Students</a>
-            <a href="/courses">Courses</a>
-            <a href="/logout">Logout</a>
-        </div>
-        <div class="splash">
-            <h3>Welcome, [User's Full Name]!</h3>
-            <p>This is your dashboard where you can view and manage your student and course information.</p>
-        </div>
+        <!-- Search bar at the top -->
         <div class="dashboard-search">
             <input type="text" placeholder="Search...">
         </div>
+        <div class="profile-bar">
+            <img src="profile.png" alt="Profile Picture">
+            <div class="profile-info">
+                <h4>[User's Full Name]</h4>
+            </div>
+            
+        </div>
+        
+
+        <!-- Left-aligned menu -->
+        <div class="dashboard-menu">
+            <h2>Dashboard</h2>
+            <a href="/courses">
+                <img src="courses.png" alt="Courses">
+                Courses
+            </a>
+            <a href="/registration">
+                <img src="registration.png" alt="Registration">
+                Registration
+            </a>
+            <a href="/logout">
+                <img src="logout.png" alt="Logout">
+                Logout
+            </a>
+        </div>
+
+        <!-- Content area to the right -->
+        <div class="dashboard-content">
+            <div class="splash">
+                <h3>Welcome, [User's Full Name]!</h3>
+                <p>This is your dashboard where you can view and manage your student and course information.</p>
+            </div>
+
+            
+            
+        </div>
+    
     </div>
 </body>
 </html>
+
 
 
 
