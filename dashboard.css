@@ -77,13 +77,13 @@
 
 /* Hover effect for menu items */
 .dashboard-menu a:hover {
-    background-color: #ddd;
+    background-color: #42cf1e;
 }
 
 /* Style for images in the menu */
 .dashboard-menu img {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     margin-bottom: 10px;
 }
 
