@@ -1,13 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
-const PORT = 3000; // or any port you prefer
 
-// Basic route
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// Middleware to parse JSON and URL-encoded data
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Your routes go here
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
 });

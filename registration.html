@@ -9,7 +9,7 @@
 <body>
     <div class="registration-container">
         <h2>Registration Form</h2>
-        <form action="/register" method="post">
+        <form id="registrationForm" method="post">
             <div class="input-group">
                 <label for="fullname">Full Name</label>
                 <input type="text" id="fullname" name="fullname" required>
@@ -30,13 +30,48 @@
                     <option value="Information Technology">Information Technology</option>
                     <option value="Software Engineering">Software Engineering</option>
                     <option value="Data Science">Data Science</option>
-                    <!-- Add more course options as needed -->
                 </select>
             </div>
             <button type="submit">Register</button>
         </form>
-    </div>
+        <script>
+            // Ensure form ID matches
+            document.getElementById('registrationForm').addEventListener('submit', function (event) {
+                event.preventDefault();
 
-    <script src="script.js"></script>
+                // Get form values
+                const fullName = document.getElementById('fullname').value;
+                const dob = document.getElementById('dob').value;
+                const passportId = document.getElementById('pid').value;
+                const course = document.getElementById('course').value;
+
+                // Send data to the backend
+                fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        fullname: fullName, 
+                        dob: dob, 
+                        passportId: passportId, 
+                        course: course 
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Registration Successful!');
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+        </script>
+    </div>
 </body>
 </html>
