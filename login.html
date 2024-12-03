@@ -9,6 +9,7 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
+        <!-- Form for login submission -->
         <form action="/login" method="post">
             <div class="input-group">
                 <label for="username">Username</label>
@@ -18,9 +19,45 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            <div>
             <button type="submit">Login</button>
-            
-        </form>
-    </div>
+            <script>
+                document.getElementById('loginForm').addEventListener('submit', function(event){
+                    event.preventDefault();
+
+                    const passportId = document.getElementById('passportId').value;
+                    const password = document
+
+                    fetch('http://locahost:3000/login', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ passportId: passportId, password: password })
+
+                    })
+                    .then(reesponse => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Login successful!');
+                            window.location.href = 'Dashboard.html';
+                        } else {
+                            alert('Error: ' + data.error);
+                        
+                        }
+                        })
+                        .catch(errror => {
+                            console.errror('Error: ', error);
+                            alert('An error occurred. Please try again ');
+
+                        });
+                    });
+  
+            </script>
+        </div>
+    </form>
+</div>
+    
 </body>
 </html>
+
