@@ -10,7 +10,7 @@
     <div class="login-container">
         <h2>Login</h2>
         <!-- Form for login submission -->
-        <form action="/login" method="post">
+        <form id="loginForm" action="/login" method="post">
             <div class="input-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
@@ -26,17 +26,17 @@
                     event.preventDefault();
 
                     const passportId = document.getElementById('passportId').value;
-                    const password = document
+                    const password = document.getAnimations('password').value;
 
-                    fetch('http://locahost:3000/login', { 
+                    fetch('http://localhost:3000/login', { 
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ passportId: passportId, password: password })
+                    body: JSON.stringify({ passportId: passportId, password: password }),
 
                     })
-                    .then(reesponse => response.json())
+                    .then(response => response.json())
                     .then(data => {
                         if (data.success) {
                             alert('Login successful!');
@@ -46,8 +46,8 @@
                         
                         }
                         })
-                        .catch(errror => {
-                            console.errror('Error: ', error);
+                        .catch(error => {
+                            console.error('Error: ', error);
                             alert('An error occurred. Please try again ');
 
                         });
