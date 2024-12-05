@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+const db = require('./db'); // Import the MySQL connection
 const app = express();
 const port = 3000;
 
@@ -9,51 +10,37 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Database connection
-let users = [];
-
-//handle user registration
+// Routes
 app.post('/register', async (req, res) => {
   const { fullname, dob, passportId, password, course } = req.body;
-  
 
-  //validate input
-  if (!fullname || !dob || !passportId || !password || !course ) { 
-    return res.status(400).json({ success: false, error: 'All fields are required,'});
+  // Validate input
+  if (!fullname || !dob || !passportId || !password || !course) {
+    return res.status(400).json({ success: false, error: 'All fields are required.' });
   }
 
-  //Hash the password
-  const hashPassword = await bcrypt.hash(password, 10);
+  try {
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  //store user data
-  const newUser = { fullname, dob, passportId, course, passsword: hashedPassword };
-  users.push(newUser);
+    // Save user data to the database
+    const query = 'INSERT INTO students (fullname, dob, passportid, course, password) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [fullname, dob, passportId, course, hashedPassword], (err) => {
+      if (err) {
+        console.error('Error inserting student data: ', err);
+        return res.status(500).json({ success: false, error: 'Database error' });
+      }
 
-  return res.status(200).json({ success: true, message: 'Registration Successfull!' });
-});
-
-//handle user login
-app.post('/login', async (req, res) => {
-  const { passportId, password } = req.body;
-
-  //validate password
-  if (!passportId ||!password) {
-    return res.status(400).json({ success: false, error: 'Passport ID and Password are required,'});
+      // Success response
+      res.status(201).json({ success: true, message: 'Registration successful!' });
+    });
+  } catch (err) {
+    console.error('Error during registration: ', err);
+    res.status(500).json({ success: false, error: 'Server error' });
   }
-
-  //compare the hashed passord
-  const isPasswordValid = await bcrypt.compare(password, user.paassword);
-  if (!isPasswordValid) {
-    return res.status(200).json({ success: true, message: 'Login Successful' });
-    } else {
-      return res.status(400).json({ succss: false,error: 'Invalid lOgin' });
-    }
-  
 });
 
-//Start server
+// Start server
 app.listen(port, () => {
-  console.log('Server running at http://localhost:${port}');  
-  
-})
-
+  console.log(`Server running at http://localhost:${port}`);
+});

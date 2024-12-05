@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Student Registration System</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
 </head>
 <body>
     <div class="registration-container">
         <h2>Registration Form</h2>
-        <form id="registrationForm" method="post">
+        <form id="registrationform" action="http://localhost:3000/register" method="POST">
             <div class="input-group">
                 <label for="fullname">Full Name</label>
                 <input type="text" id="fullname" name="fullname" required>
@@ -21,6 +21,10 @@
             <div class="input-group">
                 <label for="pid">Passport/ID Number</label>
                 <input type="text" id="pid" name="passportId" required>
+            </div>
+            <div class="input-group">
+                <label for="pid">Password</label>
+                <input type="password" id="password" name="password" required>
             </div>
             <div class="input-group">
                 <label for="course">Select Course</label>
@@ -38,26 +42,27 @@
            document.getElementById('registrationform').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const fullName = document.getElementById('fullname').value;
+            const fullname = document.getElementById('fullname').value;
             const dob = document.getElementById('dob').value;
-            const passportId = document.getElementById('Pid').value;
+            const passportId = document.getElementById('pid').value;
             const course = document.getElementById('course').value;
             const password = document.getElementById('password').value;
 
 
 
-            fetch('https://localhost:3000/rgister', {
+            fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
 
                 },
-                body: JSON.stringfy({fullname: fullName, dob: dob,})
+                body: JSON.stringify({ fullname, dob, passportId, password, course }),
             })
             .then(response => response.json())
             .then(data => {
                 if(data.success) {
                     alert('Registration successful!');
+                    window.location.href = 'login.html'; // Redirect to login page after successful registration.
                 } else {
                     alert('Error: ' + data.error);
                 }
