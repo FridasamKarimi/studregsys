@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Registration System</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/registration.css">
+</head>
+<body>
+    <div class="registration-container">
+        <div class="form-header">
+            <h2>Student Registration</h2>
+            <p>Fill in the details below to register as a student.</p>
+        </div>
+        <form id="registrationform" action="http://localhost:3000/register" method="POST">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="input-group">
+                <label for="pid">Passport/ID Number</label>
+                <input type="text" id="pid" name="passportId" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="course">Select Course</label>
+                <select id="course" name="course" required>
+                    <option value="" disabled selected>Select your course</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Software Engineering">Software Engineering</option>
+                    <option value="Data Science">Data Science</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">Register</button>
+        </form>
+
+        <script>
+            document.getElementById('registrationform').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const dob = document.getElementById('dob').value;
+                const passportId = document.getElementById('pid').value;
+                const course = document.getElementById('course').value;
+                const password = document.getElementById('password').value;
+
+                // Validate minimum age of 16
+                const currentDate = new Date();
+                const birthDate = new Date(dob);
+                let age = currentDate.getFullYear() - birthDate.getFullYear();
+                const monthDifference = currentDate.getMonth() - birthDate.getMonth();
+
+                if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())) {
+                    age--; // Adjust age if birthday hasn't occurred this year yet
+                }
+
+                if (age < 16) {
+                    alert('You must be at least 16 years old to register.');
+                    return;
+                }
+
+                // Log calculated age
+                console.log('Calculated age:', age);
+                console.log('Date of birth:', dob);
+
+                // Proceed with the registration if age is valid
+                fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ fullname: username, 
+                        dob: dob, 
+                        passportId: passportId, 
+                        password: password,
+                         course: course })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Registration successful!');
+                        window.location.href = 'login.html'; // Redirect to login page after successful registration.
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to register, please try again later.');
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
