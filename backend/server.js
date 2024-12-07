@@ -62,15 +62,15 @@ app.post('/register', async (req, res) => {
 
 // Login Route
 app.post('/login', (req, res) => {
-  const { passportId, password } = req.body;
+  const { fullname, password } = req.body;
 
-  if (!passportId || !password) {
+  if (!fullname || !password) {
     return res.status(400).json({ success: false, error: 'Passport ID and password are required.' });
   }
 
   // Find user by passportId
-  const query = 'SELECT * FROM students WHERE passportid = ?';
-  db.query(query, [passportId], async (err, result) => {
+  const query = 'SELECT * FROM students WHERE fullname = ?';
+  db.query(query, [fullname], async (err, result) => {
     if (err) {
       console.error('Error querying the database: ', err);
       return res.status(500).json({ success: false, error: 'Server error' });

@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="dashboard-container">
-        
-        <!-- Search bar at the top -->
+
+        <!-- Header with Search and Profile -->
         <header class="dashboard-header">
             <div class="dashboard-search">
                 <input type="text" placeholder="Search...">
@@ -17,36 +17,53 @@
             <div class="profile-bar">
                 <img src="assets/images/profile.png" alt="Profile Picture">
                 <div class="profile-info">
-                    <h4><!-- User's Full Name goes here --></h4>
+                    <h4 id="user-name">User's Full Name</h4>
                 </div>
             </div>      
         </header>
 
-        <!-- Left-aligned menu -->
-        <nav class="dashboard-menu">
+        <!-- Navigation Menu -->
+        <nav class="dashboard-menu" aria-label="Main Menu">
             <h2>Dashboard</h2>
-            <a href="/courses">
-                <img src="assets/images/courses.png" alt="Courses">
+            <a href="grades.html" aria-label="View Grades">
+                <img src="assets/images/courses.png" alt="Grades Icon">
                 Grades
             </a>
-            <a href="registration.html">
-                <img src="assets/images/registration.png" alt="Registration">
+            <a href="registration.html" aria-label="Go to Registration">
+                <img src="assets/images/registration.png" alt="Registration Icon">
                 Registration
             </a>
-            <a href="/logout">
-                <img src="assets/images/logout.png" alt="Logout">
+            <a href="/logout" aria-label="Logout">
+                <img src="assets/images/logout.png" alt="Logout Icon">
                 Logout
             </a>
         </nav>
 
-        <!-- Content area to the right -->
+        <!-- Main Content -->
         <main class="dashboard-content">
             <div class="splash">
-                <h3>Welcome, <!-- User's Full Name -->!</h3>
+                <h3 id="welcome-message">Welcome, User's Full Name!</h3>
                 <p>This is your dashboard where you can view and manage your student and course information.</p>
             </div>
         </main> 
             
     </div>
+
+    <!-- JavaScript to Fetch User Information Dynamically -->
+    <script>
+        // Fetch user data dynamically from the backend
+        fetch('http://localhost:3000/user-info') // Update this API endpoint as needed
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Populate the user's full name in the profile and welcome message
+                    document.getElementById('user-name').textContent = data.fullname;
+                    document.getElementById('welcome-message').textContent = `Welcome, ${data.fullname}!`;
+                } else {
+                    console.error('Error fetching user info:', data.error);
+                }
+            })
+            .catch(error => console.error('Error fetching user info:', error));
+    </script>
 </body>
 </html>
