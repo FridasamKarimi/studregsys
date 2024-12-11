@@ -12,7 +12,7 @@
         <!-- Form for login submission -->
         <form id="loginForm" action="/login" method="post">
             <div class="input-group">
-                <label for="username">username</label>
+                <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="input-group">
@@ -21,12 +21,23 @@
             </div>
             <div>
             <button type="submit">Login</button>
+            </div>
+            <div class="links">
+                <a href="register.html">Don't have an account?Register here</a><br>
+                <a href="forgot_password.html">Forgot Password?</a>
+            </div>
+
             <script>
                 document.getElementById('loginForm').addEventListener('submit', function(event){
                     event.preventDefault();
 
                     const username = document.getElementById('username').value;
                     const password = document.getElementById('password').value;
+
+                    if (!username || !password) {
+                        alert('Please enter both username and password');
+                        return;
+                    }
 
                     fetch('http://localhost:3000/login', { 
                     method: 'POST',
